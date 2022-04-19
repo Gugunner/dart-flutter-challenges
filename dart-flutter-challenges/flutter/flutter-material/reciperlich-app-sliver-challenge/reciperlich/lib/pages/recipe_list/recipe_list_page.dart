@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:reciperlich/data/recipe_repository.dart';
 
 import 'widgets/recipe_item_widget.dart';
+import 'widgets/footer_widget.dart';
 import '../../constants/app_image_paths.dart';
 import '../../shared_widgets/app_bar_widget.dart';
 
@@ -44,7 +45,7 @@ class RecipeListPage extends StatelessWidget {
               centerTitle: true,
             ),
             SliverPadding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(20.0),
               sliver: SliverFixedExtentList(
                 itemExtent: 150,
                 delegate: SliverChildBuilderDelegate(
@@ -55,6 +56,10 @@ class RecipeListPage extends StatelessWidget {
                   childCount: recipes.length,
                 ),
               ),
+
+            ),
+            const SliverToBoxAdapter(
+              child: FooterWidget(),
             )
           ],
         ),
