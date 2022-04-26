@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'models/models.dart';
 
 import 'screens/explore_screen.dart';
 import 'screens/recipes_screen.dart';
@@ -26,9 +28,7 @@ class _HomeState extends State<Home> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // TODO 9: Wrap inside a Consumer Widget
+  Widget getHome(BuildContext context, TabManager tabManager, Widget? child) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -36,21 +36,23 @@ class _HomeState extends State<Home> {
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
-      body: pages[_selectedIndex],
+      body: IndexedStack(index: tabManager.selectedTab, children: pages,),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
+        currentIndex: tabManager.selectedTab,
+        onTap: (index) {
+          tabManager.goToTab(index);
+        },
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
             icon: Icon(Icons.explore),
             label: 'Explore',
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(Icons.book),
             label: 'Recipes',
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'To Buy',
           ),
@@ -58,4 +60,13 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<TabManager>(
+      builder: (context, tabManager, child) => getHome(context, tabManager, child),
+    );
+  }
 }
+
+
