@@ -4,16 +4,16 @@ import '../components/grocery_tile.dart';
 import '../models/models.dart';
 
 class GroceryListScreen extends StatelessWidget {
-  final GroceryManager manager;
+  final GroceryManager groceryManager;
 
   const GroceryListScreen({
     Key? key,
-    required this.manager,
+    required this.groceryManager,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final groceryItems = manager.groceryItems;
+    final groceryItems = groceryManager.groceryItems;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: ListView.separated(
@@ -33,7 +33,7 @@ class GroceryListScreen extends StatelessWidget {
               ),
             ),
             onDismissed: (direction) {
-              manager.deleteItem(index);
+              groceryManager.deleteItem(index);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('${item.name} dismissed'),
@@ -46,12 +46,13 @@ class GroceryListScreen extends StatelessWidget {
                 item: item,
                 onComplete: (change) {
                   if (change != null) {
-                    manager.completeItem(index, change);
+                    groceryManager.completeItem(index, change);
                   }
                 },
               ),
               onTap: () {
-                manager.groceryItemTapped(index);
+                //Tap on grocery item
+                groceryManager.groceryItemTapped(index);
               },
             ),
           );

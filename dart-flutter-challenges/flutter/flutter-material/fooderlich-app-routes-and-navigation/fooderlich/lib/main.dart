@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'fooderlich_theme.dart';
 import 'models/models.dart';
+//Import app_router
 import 'navigation/app_router.dart';
 
 void main() {
@@ -22,8 +23,10 @@ class _FooderlichState extends State<Fooderlich> {
   final _groceryManager = GroceryManager();
   final _profileManager = ProfileManager();
   final _appStateManager = AppStateManager();
+  //Define AppRouter
   late AppRouter _appRouter;
 
+  //Initialize app router
   @override
   void initState() {
     super.initState();
@@ -38,13 +41,13 @@ class _FooderlichState extends State<Fooderlich> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => _groceryManager),
         ChangeNotifierProvider(
-          create: (context) => _appStateManager,
+          create: (context) => _groceryManager,
         ),
         ChangeNotifierProvider(
           create: (context) => _profileManager,
-        )
+        ),
+        ChangeNotifierProvider(create: (context) => _appStateManager,),
       ],
       child: Consumer<ProfileManager>(
         builder: (context, profileManager, child) {
@@ -54,10 +57,10 @@ class _FooderlichState extends State<Fooderlich> {
           } else {
             theme = FooderlichTheme.light();
           }
-
           return MaterialApp(
             theme: theme,
             title: 'Fooderlich',
+            //Replace with Router widget
             home: Router(
               routerDelegate: _appRouter,
               backButtonDispatcher: RootBackButtonDispatcher(),

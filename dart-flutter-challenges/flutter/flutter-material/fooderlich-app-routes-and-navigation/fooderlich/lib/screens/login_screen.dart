@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+import 'package:provider/provider.dart';
 import '../models/models.dart';
 
 class LoginScreen extends StatelessWidget {
+  //LoginScreen MaterialPage Helper
   static MaterialPage page() {
     return MaterialPage(
       name: FooderlichPages.loginPath,
@@ -11,6 +12,7 @@ class LoginScreen extends StatelessWidget {
       child: const LoginScreen(),
     );
   }
+
 
   final String? username;
 
@@ -36,13 +38,15 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 200,
                 child: Image(
-                  image: AssetImage('assets/fooderlich_assets/rw_logo.png'),
+                  image: AssetImage(
+                    'assets/fooderlich_assets/rw_logo.png',
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
-              buildTextfield(username ?? '🍔 username'),
+              buildTextField(username ?? '🍔 username'),
               const SizedBox(height: 16),
-              buildTextfield('🎹 password'),
+              buildTextField('🎹 password'),
               const SizedBox(height: 16),
               buildButton(context),
             ],
@@ -57,20 +61,22 @@ class LoginScreen extends StatelessWidget {
       height: 55,
       child: MaterialButton(
         color: rwColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
         child: const Text(
           'Login',
           style: TextStyle(color: Colors.white),
         ),
         onPressed: () async {
-          Provider.of<AppStateManager>(context, listen: false)
-              .login('mockUsername', 'mockPassword');
+          //Login -> Navigate to home
+          Provider.of<AppStateManager>(context, listen: false).login('mockUsername', 'mockPassword');
         },
       ),
     );
   }
 
-  Widget buildTextfield(String hintText) {
+  Widget buildTextField(String hintText) {
     return TextField(
       cursorColor: rwColor,
       decoration: InputDecoration(
@@ -81,7 +87,9 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
         focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.green),
+          borderSide: BorderSide(
+            color: Colors.green,
+          ),
         ),
         hintText: hintText,
         hintStyle: const TextStyle(height: 0.5),
